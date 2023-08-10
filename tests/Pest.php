@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\User;
+
 uses(Tests\TestCase::class)->in('Feature');
 
 /*
@@ -39,7 +41,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function login($user = null)
 {
-    // ..
+    return test()->actingAs($user ?? User::factory()->create());
+    // helper function test() allows referring to TestCase class, while it is calling inside a test
 }

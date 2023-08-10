@@ -4,6 +4,7 @@ use App\Models\Account;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
+// Hooks beforeAll() and afterAll() don't have access to laravel features
 beforeEach(function () {
     $this->user = User::factory()->create([
         'account_id' => Account::create(['name' => 'Acme Corporation'])->id,

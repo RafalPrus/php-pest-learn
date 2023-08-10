@@ -5,8 +5,7 @@ namespace Tests\Feature;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Inertia\Testing\Assert;
-use Inertia\Testing\AssertableInertia;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class ContactsTest extends TestCase
@@ -88,17 +87,17 @@ class ContactsTest extends TestCase
     {
         $this->actingAs($this->user)
             ->get('/contacts?search=Martin')
-            ->assertInertia(fn (AssertableInertia $assert) => $assert
+            ->assertInertia(fn (Assert $assert) => $assert
                 ->component('Contacts/Index')
                 ->where('filters.search', 'Martin')
                 ->has('contacts.data', 1)
-                ->has('contacts.data.0', fn (AssertableInertia $assert) => $assert
+                ->has('contacts.data.0', fn (Assert $assert) => $assert
                     ->where('id', 1)
                     ->where('name', 'Martin Abbott')
                     ->where('phone', '555-111-2222')
                     ->where('city', 'Murphyland')
                     ->where('deleted_at', null)
-                    ->has('organization', fn (AssertableInertia $assert) => $assert
+                    ->has('organization', fn (Assert $assert) => $assert
                         ->where('name', 'Example Organization Inc.')
                     )
                 )

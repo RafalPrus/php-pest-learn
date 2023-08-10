@@ -18,16 +18,24 @@ it('It can store contact', function () {
         'postal_code' => faker()->postcode
         ])->assertRedirect('/contacts')->assertSessionHas('success', 'Contact created.');
 
-    $contact = Contact::latest()->first();
+//    $contact = Contact::latest()->first();
+//
+//    // $this->assertSame('Kielce', $contact->city);
+//
+//    expect($contact->first_name)->toBeString()->not->toBeEmpty();
+//    expect($contact->last_name)->toBeString()->not->toBeEmpty();
+//    expect($contact->email)->toBeString()->toContain('@', '.');
+//    expect($contact->phone)->toBePhoneNumber();
+//    expect($contact->city)->toBe('Kielce');
+//    expect($contact->region)->toBe('Swietokrzyskie');
+//    expect($contact->country)->toBeIn(['us', 'pl']);
 
-    // $this->assertSame('Kielce', $contact->city);
-
-    expect($contact->first_name)->toBeString()->not->toBeEmpty();
-    expect($contact->last_name)->toBeString()->not->toBeEmpty();
-    expect($contact->email)->toBeString()->toContain('@', '.');
-    expect($contact->phone)->toBeString()->toContain('+');
-    expect($contact->city)->toBe('Kielce');
-    expect($contact->region)->toBe('Swietokrzyskie');
-    expect($contact->region)->toBe('Swietokrzyskie');
-    expect($contact->country)->toBeIn(['us', 'pl']);
+    expect(Contact::latest()->first())
+        ->first_name->toBeString()->not->toBeEmpty()
+        ->last_name->toBeString()->not->toBeEmpty()
+        ->email->toBeString()->toContain('@', '.')
+        ->phone->toBePhoneNumber()
+        ->city->toBe('Kielce')
+        ->region->toBe('Swietokrzyskie')
+        ->country->toBeIn(['us', 'pl']);
 });

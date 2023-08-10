@@ -5,8 +5,8 @@ use App\Models\Contact;
 use function Pest\Faker\faker;
 
 
-it('It can store contact', function () {
-    login()->post('/contacts', [
+it('It can store contact', function (array $data) {
+    login()->post('/contacts', [...[
         'first_name' => faker()->firstName,
         'last_name' => faker()->lastName,
         'email' => faker()->email,
@@ -16,7 +16,7 @@ it('It can store contact', function () {
         'region' => 'Swietokrzyskie',
         'country' => faker()->randomElement(['us', 'pl']),
         'postal_code' => faker()->postcode
-        ])->assertRedirect('/contacts')->assertSessionHas('success', 'Contact created.');
+        ], ...$data])->assertRedirect('/contacts')->assertSessionHas('success', 'Contact created.');
 
 //    $contact = Contact::latest()->first();
 //
@@ -38,4 +38,11 @@ it('It can store contact', function () {
         ->city->toBe('Kielce')
         ->region->toBe('Swietokrzyskie')
         ->country->toBeIn(['us', 'pl']);
-});
+})->with([
+    'generic' => [[]],
+    'with provided email with spaces' => [['email' => '"luuke dow"@gmail.com']],
+    'with email and last name' => [['email' => 'luke@gmail.com', 'last_name' => 'Joe']],
+    [['email' => '"luke luuke"@gmail.com', 'last_name' => 'Liza']],
+    [['last_name' => 'Olivier']],
+    'with postal code with 24 characters' => [['postal_code' => str_repeat('12', 12)]]
+]);
